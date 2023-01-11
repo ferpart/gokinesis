@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/fpartidabc/gokinesis/pkg/kinesis"
+	"github.com/ferpart/gokinesis/pkg/kinesis"
 )
 
 const (

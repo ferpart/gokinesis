@@ -3,8 +3,9 @@ package consume
 import (
 	"encoding/json"
 
-	"github.com/fpartidabc/gokinesis/pkg/kinesis"
 	"github.com/mjneil/kinesis-producer/deaggregation"
+
+	"github.com/ferpart/gokinesis/pkg/kinesis"
 )
 
 func Consume(k *kinesis.Kinesis, stopConsume <-chan bool, storeChan chan *CommonMap) {
