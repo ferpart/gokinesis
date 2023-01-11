@@ -3,7 +3,7 @@ package kinesis
 import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/kinesis"
-	"github.com/fpartidabc/gokinesis/pkg/wait"
+	"github.com/ferpart/gokinesis/pkg/wait"
 )
 
 func (k *Kinesis) NewStream() error {

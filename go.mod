@@ -1,4 +1,4 @@
-module github.com/fpartidabc/gokinesis
+module github.com/ferpart/gokinesis
 
 go 1.19
 

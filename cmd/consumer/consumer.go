@@ -5,17 +5,15 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/fpartidabc/gokinesis/internal/common2csv"
-	"github.com/fpartidabc/gokinesis/internal/consume"
-	"github.com/fpartidabc/gokinesis/pkg/kinesis"
+	"github.com/ferpart/gokinesis/internal/common2csv"
+	"github.com/ferpart/gokinesis/internal/consume"
+	"github.com/ferpart/gokinesis/pkg/kinesis"
 )
 
 const (
 	hostname   = "http://localhost:4568"
 	region     = "us-east-1"
 	streamName = "qa-ssai-ad-tracking-regional"
-
-	//timeout = time.Second
 )
 
 func main() {

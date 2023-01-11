@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"os"
 
-	"github.com/fpartidabc/gokinesis/internal/consume"
 	"github.com/yukithm/json2csv"
+
+	"github.com/ferpart/gokinesis/internal/consume"
 )
 
 const (
