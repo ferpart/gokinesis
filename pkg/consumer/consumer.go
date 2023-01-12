@@ -2,9 +2,11 @@ package consumer
 
 import (
 	"encoding/json"
+
+	"github.com/mjneil/kinesis-producer/deaggregation"
+
 	"github.com/ferpart/gokinesis/domain"
 	"github.com/ferpart/gokinesis/pkg/save2csv"
-	"github.com/mjneil/kinesis-producer/deaggregation"
 )
 
 type Consumer struct {
