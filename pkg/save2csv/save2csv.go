@@ -1,8 +1,9 @@
-package common2csv
+package save2csv
 
 import (
 	"bytes"
 	"os"
+	"time"
 
 	"github.com/yukithm/json2csv"
 )
@@ -29,25 +30,14 @@ func Save2CSV(items []map[string]interface{}) error {
 	}
 	wr.Flush()
 
-	for _, record := range c.GetRecordMap() {
-		b := &bytes.Buffer{}
-		wr := json2csv.NewCSVWriter(b)
-		csv, err := json2csv.JSON2CSV(record)
-		if err != nil {
-			return err
-		}
-		if err = wr.WriteCSV(csv); err != nil {
-			return err
-		}
-		wr.Flush()
-
-		recordKey := record[0][c.GetRecordKey()].(string)
-		if err = os.WriteFile(trackedDir+"/"+recordKey+ext, b.Bytes(), os.ModePerm); err != nil {
-			return err
-		}
+	if err = os.WriteFile(getFileName(), b.Bytes(), os.ModePerm); err != nil {
+		return err
 	}
+
 	return nil
 }
 
 func getFileName() string {
+	t := time.Now()
+	return trackedDir + "/" + t.Format(timeFmt) + ext
 }

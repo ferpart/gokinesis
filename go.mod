@@ -5,6 +5,7 @@ go 1.19
 require (
 	github.com/aws/aws-sdk-go v1.44.177
 	github.com/mjneil/kinesis-producer v0.2.1-0.20220401140238-7479757e40b1
+	github.com/spf13/pflag v1.0.5
 	github.com/yukithm/json2csv v0.1.2
 )
 

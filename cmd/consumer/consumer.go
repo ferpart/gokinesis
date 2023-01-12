@@ -1,26 +1,48 @@
 package main
 
 import (
+	"errors"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
-	"github.com/ferpart/gokinesis/internal/common2csv"
-	"github.com/ferpart/gokinesis/internal/consume"
+	"github.com/spf13/pflag"
+
+	"github.com/ferpart/gokinesis/pkg/consumer"
 	"github.com/ferpart/gokinesis/pkg/kinesis"
 )
 
-const (
-	hostname   = "http://localhost:4568"
-	region     = "us-east-1"
-	streamName = "qa-ssai-ad-tracking-regional"
-)
+const timeout = time.Second * 5
+
+var streamName *string
+var hostname *string
+
+func init() {
+	streamName = pflag.StringP(
+		"stream-name",
+		"s",
+		"",
+		"Required: sets the stream name to be created by the application",
+	)
+
+	hostname = pflag.StringP(
+		"hostname",
+		"h",
+		"http://localhost:4568",
+		"Sets the hostname in which the kinesis stream is located. Defaults to \"http://localhost:4568.\"",
+	)
+}
 
 func main() {
+	if *streamName == "" {
+		panic(errors.New("no stream name provided"))
+	}
+
 	k := kinesis.New(
-		hostname,
-		region,
-		streamName,
+		*hostname,
+		"us-east-1",
+		*streamName,
 	)
 
 	stop := make(chan os.Signal, 1)
@@ -32,15 +54,16 @@ func main() {
 	)
 
 	stopConsume := make(chan bool, 1)
-	storeChan := make(chan *consume.CommonMap, 1)
 
-	go consume.Consume(k, stopConsume, storeChan)
+	c := consumer.New(k)
+	go func() {
+		if err := c.Consume(stopConsume); err != nil {
+			panic(err)
+		}
+	}()
 
 	<-stop
-
 	stopConsume <- true
 
-	if err := common2csv.Common2CSV(<-storeChan); err != nil {
-		panic(err)
-	}
+	time.Sleep(timeout)
 }
