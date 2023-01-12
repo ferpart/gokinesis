@@ -1,6 +1,6 @@
-# GoKinesis Utils
+# GOKinesis
 
-This repository is used to provide utils when running kinesis locally in SSAI. This repo
+This repository is used to provide utils when running kinesis locally. This repo
 provides the following features:
 
 ## Starter
@@ -26,7 +26,8 @@ The application will close with a message when the stream has been created.
 
 When running the [consumer.go](https://github.com/ferpart/gokinesis/blob/091fb8c59bfb821dac43540180c5f564a0e28c55/cmd/consumer/consumer.go)
 application, the stream with the provided **stream name** will be read, and its
-contents will be saved, and parsed into a CSV stored in a new `tracked` directory.
+contents will be saved, and parsed into a CSV stored in a new `tracked/` directory 
+with the `YYYY-MM-DDThh:mm:ss` format.
 
 The `-s` or `--stream-name` flags are required.
 
@@ -40,6 +41,3 @@ hostname. This can be changed with the `-h` or `--hostname` flags.
 ```bash
 go run starter.go -s stream_a -h HOSTNAME:PORT
 ```
-
-When the application is closed, the CSV files will be generated and stored into the
-`tracked` directory.
