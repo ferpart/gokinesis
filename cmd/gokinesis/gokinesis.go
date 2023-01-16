@@ -26,18 +26,20 @@ func init() {
 		"stream-name",
 		"s",
 		"default",
-		"sets the stream name to be created by the application. Defaults to \"default\"",
+		"sets the stream name to be created by the application.",
 	)
 
 	hostname = pflag.StringP(
 		"hostname",
-		"h",
+		"n",
 		"http://localhost:4568",
-		"sets the hostname in which the kinesis stream is located. Defaults to \"http://localhost:4568.\"",
+		"sets the hostname in which the kinesis stream is located.",
 	)
 }
 
 func main() {
+	pflag.Parse()
+
 	k := kinesis.New(
 		*hostname,
 		"us-east-1",

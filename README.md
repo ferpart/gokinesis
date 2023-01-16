@@ -1,43 +1,64 @@
-# GOKinesis
+# GoKinesis
 
-This repository is used to provide utils when running kinesis locally. This repo
-provides the following features:
+This repository is used to provide utils when running kinesis locally.
 
-## Starter
-When running the [starter.go](https://github.com/ferpart/gokinesis/blob/091fb8c59bfb821dac43540180c5f564a0e28c55/cmd/starter/starter.go)
-application, a new stream will be created with the provided **stream name**.
+To determine the application flow, GoKinesis has the `operation-type` or `-o` flag. 
+This flag defaults to `starter` but it supports any of the following values:
+* `starter`: Used to run the [Starter](#starter) application.
+* `consumer`: Used to run the [Consumer](#consumer) application
 
-The `-s` or `--stream-name` flags are required.
+### Example
 
-```bash
-go run starter.go -s STREAM_NAME
+#### Starter application
+```shell
+./gokinesis -o starter
 ```
 
-The application defaults to using `http://localhost:4568` as the default kinesis
-hostname. This can be changed with the `-h` or `--hostname` flags.
+#### Consumer application
+```shell
+./gokinesis -o consumer
+```
+
+## Starter
+When running the application with the `starter` param, a new stream will be created. 
+The following flags are supported:
+
+
+**Stream-name** `-s` or `--stream-name` flags are used for determining the name for
+the new kinesis stream. The application defaults to the `default` stream name.
+
+```shell
+./gokinesis -o starter -s STREAM_NAME
+```
+
+**Hostname** `-n` or `--hostname` flags are used for determining the host of the 
+kinesis stream. The application defaults to using `http://localhost:4568` as the 
+default kinesis hostname.
 
 ```bash
-go run starter.go -s stream_a -h HOSTNAME:PORT
+./gokinesis -o starter -n HOSTNAME:PORT
 ```
 
 The application will close with a message when the stream has been created.
 
 ## Consumer
 
-When running the [consumer.go](https://github.com/ferpart/gokinesis/blob/091fb8c59bfb821dac43540180c5f564a0e28c55/cmd/consumer/consumer.go)
-application, the stream with the provided **stream name** will be read, and its
-contents will be saved, and parsed into a CSV stored in a new `tracked/` directory 
-with the `YYYY-MM-DDThh:mm:ss` format.
+When running the application with th `consumer` param, a kinesis stream will be
+consumed. These contents will be saved, and parsed into a CSV stored in a new 
+`tracked` directory with the `YYYY-MM-DDThh:mm:ss` format. The following flags
+are supported for this application:
 
-The `-s` or `--stream-name` flags are required.
+**Stream-name** `-s` or `--stream-name` flags are used for determining the name for
+the new kinesis stream. The application defaults to the `default` stream name.
 
-```bash
-go run consumer.go -s STREAM_NAME
+```shell
+./gokinesis -o consumer -s STREAM_NAME
 ```
 
-The application defaults to using `http://localhost:4568` as the default kinesis
-hostname. This can be changed with the `-h` or `--hostname` flags.
+**Hostname** `-n` or `--hostname` flags are used for determining the host of the
+kinesis stream. The application defaults to using `http://localhost:4568` as the
+default kinesis hostname.
 
 ```bash
-go run starter.go -s stream_a -h HOSTNAME:PORT
+./gokinesis -o consumer -n HOSTNAME:PORT
 ```
