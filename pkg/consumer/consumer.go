@@ -29,6 +29,11 @@ func (c *Consumer) Consume(stopConsume <-chan bool) error {
 			if err != nil {
 				return err
 			}
+
+			if len(consumed) == 0 {
+				continue
+			}
+
 			if err = save2csv.Save2CSV(consumed); err != nil {
 				return err
 			}

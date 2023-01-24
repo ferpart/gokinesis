@@ -2,17 +2,20 @@ package save2csv
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/yukithm/json2csv"
 )
 
 const (
 	trackedDir = "tracked"
-	ext        = ".csv"
 
-	timeFmt = "YYYY-MM-DDThh:mm:ss"
+	fileFmt = trackedDir + "/%s_%s.csv"
+
+	timeFmt = "15:04:05"
 )
 
 func Save2CSV(items []map[string]interface{}) error {
@@ -39,5 +42,5 @@ func Save2CSV(items []map[string]interface{}) error {
 
 func getFileName() string {
 	t := time.Now()
-	return trackedDir + "/" + t.Format(timeFmt) + ext
+	return fmt.Sprintf(fileFmt, uuid.New(), t.Format(timeFmt))
 }
